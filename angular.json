@@ -22,6 +22,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "allowedCommonJsDependencies": ["socket.io-client","file-saver"],
             "aot": true,
             "assets": [
               "src/favicon.ico",

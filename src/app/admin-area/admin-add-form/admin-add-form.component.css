@@ -1,0 +1,22 @@
+mat-form-field {
+    margin: 5px;
+}
+
+h1 {
+    text-decoration: solid 1px black underline;
+}
+
+.ng-hide {
+    display: none;
+}
+
+img {
+    width: 50%;
+}
+form button {
+    padding: 10px;
+}
+
+button {
+    margin-left: 5px;
+}

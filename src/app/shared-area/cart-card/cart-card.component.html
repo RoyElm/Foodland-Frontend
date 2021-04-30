@@ -1,0 +1,24 @@
+<mat-card>
+    <img mat-card-image src="{{imageUrl}}" alt="{{cartItem.product.name}}">
+    <mat-card-header>
+        <mat-card-title [ngStyle]="cartItem.background">{{cartItem.product.name}}</mat-card-title>
+        <mat-card-subtitle>Price: {{cartItem.product.price | currency}}</mat-card-subtitle>
+        <mat-card-subtitle>Total Price: {{cartItem.totalPrice | currency}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+        <button mat-icon-button color="warn" [hidden]="!enableChanges" [disabled]="cartItem.quantity <= 1"
+            (click)="minus()">
+            <mat-icon>remove</mat-icon>
+        </button>
+        <mat-form-field>
+            <mat-label>Quantity</mat-label>
+            <input matInput disabled type="number" min="1" [(ngModel)]="cartItem.quantity">
+        </mat-form-field>
+        <button mat-icon-button color="accent" [hidden]="!enableChanges" (click)="plus()">
+            <mat-icon>add</mat-icon>
+        </button>
+        <a mat-icon-button [hidden]="!enableChanges" (click)="deleteCartItem()">
+            <mat-icon>delete_forever</mat-icon>
+        </a>
+    </mat-card-actions>
+</mat-card>

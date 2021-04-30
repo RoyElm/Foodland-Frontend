@@ -1,0 +1,14 @@
+<div class="cart-list-container">
+    <header>
+        <h1>Admin Panel <mat-icon>build</mat-icon>
+        </h1>
+    </header>
+    <main class="cart-card-container">
+        <ng-container *ngIf="!productToEdit">
+            <app-admin-add-form></app-admin-add-form>
+        </ng-container>
+        <ng-container *ngIf="productToEdit">
+            <app-admin-edit-form [product]="productToEdit"></app-admin-edit-form>
+        </ng-container>
+    </main>
+</div>

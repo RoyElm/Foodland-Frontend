@@ -1,0 +1,18 @@
+<div mat-dialog-content>
+    <h1 mat-dialog-title>Your Order:</h1>
+    <p>
+        City: {{order.cityToDeliver}},
+        <br>
+        Address: {{order.addressToDeliver}}
+        <br>
+        Date To Deliver: {{order.dateToDeliver}}
+        <br>
+        Total Price: {{order.totalPrice | currency}}
+        <br>
+        CreditCard: XXXX-XXXX-XXXX-{{order.lastFourDigit}}
+    </p>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()" color="warn">Close</button>
+    <button mat-raised-button (click)="sendOrder()" color="primary">Order!</button>
+</div>

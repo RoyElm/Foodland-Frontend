@@ -1,0 +1,50 @@
+<div [formGroup]="subForm">
+    <mat-form-field appearance="outline">
+        <mat-label>
+            Id card
+        </mat-label>
+        <input matInput formControlName="idCard" maxlength="9" pattern="^\d{9}$" required>
+        <mat-error>
+            {{ errorMessage("idCard") }}
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>
+            Email
+        </mat-label>
+        <input matInput formControlName="email" type="email" pattern="^([\w]+@([\w-]+\.)+[\w-]{2,4})?$" required>
+        <mat-error>
+            {{ errorMessage("email") }}
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline">
+        <mat-label>
+            Password
+        </mat-label>
+        <input matInput formControlName="password" onKeyDown="if(event.keyCode === 32)
+        return false" minlength="6" required [type]="PasswordHide ? 'password' : 'text'">
+        <button mat-icon-button type="button" matSuffix (click)="PasswordHide = !PasswordHide"
+            [attr.aria-label]="'hide password'" [attr.aria-pressed]="PasswordHide">
+            <mat-icon>{{PasswordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error>
+            {{errorMessage("password")}}
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>
+            Confirm password
+        </mat-label>
+        <input matInput formControlName="confirmPassword" onKeyDown="if(event.keyCode === 32)
+        return false" minlength="6" pattern={{checkPasswords()}} required
+            [type]="confirmPasswordHide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix type="button" (click)="confirmPasswordHide = !confirmPasswordHide"
+            [attr.aria-label]="'hide password'" [attr.aria-pressed]="confirmPasswordHide">
+            <mat-icon>{{confirmPasswordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error>
+            {{ errorMessage("confirmPassword") }}
+        </mat-error>
+    </mat-form-field>
+</div>

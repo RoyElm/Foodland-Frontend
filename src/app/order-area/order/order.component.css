@@ -1,0 +1,17 @@
+mat-drawer-container {
+    height: 100%;
+    background: inherit;
+}
+
+mat-drawer {
+    width: 25%;
+}
+nav {
+    background: white;
+}
+app-order-form {
+    margin: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

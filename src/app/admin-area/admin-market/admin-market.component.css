@@ -1,0 +1,8 @@
+mat-drawer-container {
+    height: 100%;
+    background: inherit;
+}
+
+mat-drawer {
+    width: 25%;
+}

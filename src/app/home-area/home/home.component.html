@@ -1,0 +1,10 @@
+<div class="main-grid">
+    <ng-container *ngIf="!user">
+        <app-login></app-login>
+    </ng-container>
+    <ng-container *ngIf="user">
+        <app-resume-shop [user]="user"></app-resume-shop>
+    </ng-container>
+    <app-about-us></app-about-us>
+    <app-market-details [user]="user"></app-market-details>
+</div>

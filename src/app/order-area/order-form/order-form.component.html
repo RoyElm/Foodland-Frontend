@@ -1,0 +1,47 @@
+<form #formInfo="ngForm" (submit)="formInfo.valid && order()">
+    <h1>Order <mat-icon>credit_card</mat-icon>
+    </h1>
+    <h3>Shipping Details:</h3>
+    <mat-form-field appearance="fill">
+        <mat-label>City</mat-label>
+        <mat-select name="cityToDeliver" [(ngModel)]="newOrder.cityToDeliver" #cityInfo="ngModel" required>
+            <mat-option *ngFor="let city of cities" [value]="city.name">
+                {{city.name}}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="cityInfo.errors?.required">City is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Address </mat-label>
+        <input matInput name="addressToDeliver"
+            pattern="^(([a-zA-Z\u0590-\u05fe]{2,}\s?)+([a-zA-Z0-9\u0590-\u05fe]+\s?)?)+$" minlength="2"
+            [(ngModel)]="newOrder.addressToDeliver" #addressInfo="ngModel" required>
+        <mat-error *ngIf="addressInfo.errors?.required">Address is required</mat-error>
+        <mat-error *ngIf="addressInfo.errors?.pattern">You have double spaces or started with a space</mat-error>
+        <mat-error *ngIf="addressInfo.errors?.minlength">Minimum Length is 2</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill" (click)="picker.open()">
+        <mat-label>Choose a date</mat-label>
+        <input matInput name="dateToDeliver" [min]="currentDate" [(ngModel)]="newOrder.dateToDeliver"
+            #dateInfo="ngModel" [matDatepicker]="picker" [matDatepickerFilter]="filterUsedDates" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="dateInfo.errors?.required">Date is required</mat-error>
+    </mat-form-field>
+    <p>
+        Only 3 Orders Available Per Date!
+    </p>
+    <hr>
+    <h3>Payment Details:</h3>
+    <mat-form-field appearance="fill">
+        <mat-label>Credit Card</mat-label>
+        <input matInput name="lastFourDigit" [(ngModel)]="newOrder.lastFourDigit" maxlength="16"
+            #creditCardInfo="ngModel" pattern="^\d{16}$" required>
+        <mat-error *ngIf="creditCardInfo.errors?.required">Credit Card is required</mat-error>
+        <mat-error *ngIf="creditCardInfo.errors?.pattern">Credit card is wrong <br>
+            need at least 16 digits</mat-error>
+    </mat-form-field>
+    <br><br>
+    <button mat-raised-button color="primary">Order</button>
+</form>

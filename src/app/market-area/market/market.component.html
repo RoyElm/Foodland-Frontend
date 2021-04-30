@@ -1,0 +1,17 @@
+<mat-drawer-container>
+    <nav mat-tab-nav-bar>
+        <a mat-tab-link (click)="drawer.toggle()">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+            &nbsp; Cart &nbsp;
+            <mat-icon>shopping_cart</mat-icon>
+            &nbsp;
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </a>
+    </nav>
+    <mat-drawer opened #drawer mode="side">
+        <ng-container *ngIf="shoppingCart?.open">
+            <app-cart-list [shoppingCart]="shoppingCart" [enableChanges]="true"></app-cart-list>
+        </ng-container>
+    </mat-drawer>
+    <app-products-list></app-products-list>
+</mat-drawer-container>

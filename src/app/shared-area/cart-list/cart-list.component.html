@@ -1,0 +1,43 @@
+<div class="cart-list-container">
+    <header>
+        <h1>
+            Shopping Cart
+            <mat-icon>shopping_basket</mat-icon>
+        </h1>
+        <span class="example-spacer"></span>
+        <button mat-icon-button color="warn" *ngIf="cartItems?.length" [hidden]="!enableChanges" class="delete-cart-button" (click)="deleteCart = !deleteCart">
+            <mat-icon>delete_forever</mat-icon>
+        </button>
+    </header>
+    <main class="cart-card-container">
+        <nav class="navbarCart" mat-tab-nav-bar [hidden]="enableChanges">
+            <app-search-bar (productToSearch)="searchProduct($event)"></app-search-bar>
+        </nav>
+        <div class="emptyProducts" *ngIf="!deleteCart && !cartItems?.length"></div>
+        <div class="delete-cart-container" *ngIf="deleteCart">
+            <h3>
+                Dear customer,
+                <br>
+                Do you want to delete all products in the cart?
+            </h3>
+            <button mat-raised-button color="warn" (click)="deleteCartAsync()">
+                Delete Cart
+            </button>
+            <button mat-raised-button color="primary" (click)="deleteCart = !deleteCart">
+                Back to cart
+            </button>
+        </div>
+        <ng-container *ngIf="!deleteCart">
+            <app-cart-card *ngFor="let c of cartItems" [cartItem]="c" [enableChanges]="enableChanges"></app-cart-card>
+        </ng-container>
+    </main>
+    <footer class="footerCart">
+        <span>Quantity<mat-icon>shopping_basket</mat-icon>: {{totalQuantity | number}}</span>
+        <span class="example-spacer"></span>
+        <h2>Total: {{totalPrice | currency}}</h2>
+        <a mat-button [hidden]="!enableChanges" [routerLink]="paths.orderUrl">
+            Order
+            <mat-icon>shopping_cart</mat-icon>
+        </a>
+    </footer>
+</div>

@@ -1,0 +1,16 @@
+nav{
+    background-color: rgb(56, 56, 56);
+}
+mat-icon {
+    color: white;
+}
+.example-spacer {
+    flex: 1 1 auto;
+}
+.headerTag {
+    font-size: xx-large;
+    color: white;
+}
+a {
+    color: white;
+}

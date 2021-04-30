@@ -1,0 +1,39 @@
+<div [formGroup]="subForm">
+    <mat-form-field appearance="outline">
+        <mat-label>City</mat-label>
+        <mat-select formControlName="city" required>
+            <mat-option *ngFor="let city of cities" [value]="city.name">
+                {{city.name}}
+            </mat-option>
+        </mat-select>
+        <mat-error>
+            {{ errorMessage("city") }}
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>address</mat-label>
+        <input matInput formControlName="address"
+            pattern="^(([a-zA-Z\u0590-\u05fe]{2,}\s?)+([a-zA-Z0-9\u0590-\u05fe]+\s?)?)+$" minlength="2" maxlength="15"
+            required>
+        <mat-error>
+            {{ errorMessage("address") }}
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput type="text" formControlName="firstName" pattern="^([a-zA-Z\u0590-\u05fe]{2,}\s?)+$"
+            minlength="2" maxlength="30" required>
+        <mat-error>
+            {{ errorMessage("firstName") }}
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" pattern="^([a-zA-Z\u0590-\u05fe]{2,}\s?)+$" minlength="2"
+            maxlength="30" required>
+        <mat-error>
+            {{ errorMessage("lastName") }}
+        </mat-error>
+    </mat-form-field>
+</div>

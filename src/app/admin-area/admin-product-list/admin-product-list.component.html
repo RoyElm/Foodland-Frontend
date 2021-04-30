@@ -1,0 +1,29 @@
+<nav mat-tab-nav-bar>
+    <app-search-bar (productToSearch)="searchProduct($event)"></app-search-bar>
+    <span class="toolbar-flex"></span>
+    <a mat-tab-link active (click)="allCategory()">
+        All
+    </a>
+    <a mat-tab-link active *ngFor="let c of categories" (click)="changeCategory(c._id)">
+        {{c.categoryName}}
+    </a>
+</nav>
+<div>
+    <ng-container *ngIf="productsSwitched?.length">
+        <app-admin-product-card *ngFor="let p of productsSwitched" [product]="p"></app-admin-product-card>
+    </ng-container>
+    <ng-container *ngIf="!products?.length">
+        <div class="nothing-in-store">
+            <p>
+                <mat-spinner></mat-spinner>
+            </p>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!productsSwitched?.length">
+        <div class="nothing-in-store">
+            <p>
+                <span>Nothing with that name in store</span>
+            </p>
+        </div>
+    </ng-container>
+</div>

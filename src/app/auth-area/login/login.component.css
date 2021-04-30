@@ -1,0 +1,51 @@
+div{
+    position: relative; 
+    height: 100%;
+    width: 450px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+
+}
+div::before {    
+    content: "";
+    background-image: url("../../../assets/images/login.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    border-radius: 20px;
+    opacity: 0.95;
+} 
+div > * {
+    position: relative;
+
+}
+h2 {
+    font-size: xxx-large;
+    text-decoration: underline 1px solid white;
+}
+
+a > button{
+    margin-left: 1rem;
+}
+
+mat-form-field {
+    width: 250px;
+    color: white;
+}
+mat-label {
+    color: rgb(255, 255, 255);
+}
+mat-error{
+    color: white;
+    font-weight: bolder;
+    background-color: red;
+    
+}

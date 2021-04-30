@@ -1,0 +1,23 @@
+.cart-list-container {
+    height: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+    grid-template-rows: 15% 85% ;
+}
+
+header {
+    grid-column: span 6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    overflow: auto;
+    grid-column: span 6;
+}
+
+header {
+    background-color: rgb(233, 35, 0);
+}

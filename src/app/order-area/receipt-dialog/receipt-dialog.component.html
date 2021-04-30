@@ -1,0 +1,12 @@
+<div mat-dialog-content>
+    <h1 mat-dialog-title>Order Successfully</h1>
+    <p>
+        For download receipt click
+        <button mat-icon-button color="primary" (click)="downloadReceipt()">
+            <mat-icon>cloud_download</mat-icon>
+        </button>
+    </p>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()" color="warn">Close</button>
+</div>

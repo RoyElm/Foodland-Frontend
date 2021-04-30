@@ -1,0 +1,84 @@
+.cart-list-container {
+    height: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+    grid-template-rows: 10% 80% 10%;
+}
+
+header,footer {
+    grid-column: span 6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    overflow: auto;
+    grid-column: span 6;
+}
+
+header {
+    background-color: white;
+}
+footer {
+    background-color: #3c6382;
+    display: flex;
+}
+.emptyProducts {
+    height: 100%;
+    background-image: url("../../../assets/images/empty-shopping-cart.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+
+footer > a{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #eb2f06;
+}
+
+footer > a[hidden]{
+    display: none;
+}
+.example-spacer {
+    flex: 1 1 auto;
+}
+footer > span {
+    font-size: x-large;
+}
+
+footer h2 {
+    margin-right: 5px;
+}
+nav[hidden],button[hidden]{
+    display: none;
+}
+nav {
+    display: flex;
+    justify-content: left;
+    align-items: left;
+}
+.delete-cart-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-cart-button mat-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+}
+.delete-cart-container {
+    height: 100%;
+    overflow: auto;
+}
+.delete-cart-container *{
+    margin: 5px;
+}

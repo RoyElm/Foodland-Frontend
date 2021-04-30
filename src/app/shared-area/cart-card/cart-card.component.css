@@ -1,0 +1,32 @@
+mat-card {
+    width: 100%;
+    display: flex;
+    padding: 0;
+}
+img {
+    height: 100px;
+    width: 100px;
+    float: left;
+}
+.mat-card-image {
+    margin: 0;
+}
+
+mat-form-field {
+    width: 50px;
+    margin: 10px;
+}
+mat-card-title{
+    word-wrap: break-word;
+    width: 100px;
+    font-size: medium;
+}
+a {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+}
+
+button[hidden],a[hidden]{
+    display: none;
+}

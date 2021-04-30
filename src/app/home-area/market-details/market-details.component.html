@@ -1,0 +1,29 @@
+<div class="market-details">
+    <img src="../../../assets/images/store-products.jpg">
+    <h3>
+        Available Products in our store {{countProducts}}
+        <br><br>
+        Number of orders submitted in our store {{countOrders}}
+    </h3>
+    <div class="box" *ngIf="user && shoppingCart && user?.role ==='0'">
+        <h4>Hello {{user.firstName}} {{user.lastName}}</h4>
+        <p *ngIf="shoppingCart.open && shoppingCart.userId === user._id">
+            You have open cart from {{shoppingCart.cartCreationDate | date}}
+            <br>
+            Total Price in cart is {{totalPrice | currency}}
+        </p>
+        <p *ngIf="!shoppingCart.open && shoppingCart.userId === user._id">
+            Your last purchase was on {{shoppingCart.cartCreationDate | date}}
+            <br>
+            Total Price in cart were {{totalPrice | currency}}
+        </p>
+    </div>
+    <div class="box" *ngIf="user?.role === 'Admin-Role'">
+        <h4>Welcome {{user.firstName}} {{user.lastName}}</h4>
+        <h4>You have admin control</h4>
+    </div>
+    <div class="box" *ngIf="!shoppingCart && user?.role ==='0'">
+        <h4>Welcome {{user.firstName}} {{user.lastName}}</h4>
+        <h4>Please Start Your First Shopping Enjoy!</h4>
+    </div>
+</div>

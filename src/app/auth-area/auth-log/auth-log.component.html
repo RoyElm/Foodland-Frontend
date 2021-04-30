@@ -1,0 +1,21 @@
+<div>
+    <a mat-tab-link routerLinkActive [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon class="accountCircle">account_circle</mat-icon>
+    </a>
+    <mat-menu #menu="matMenu">
+        <ng-container *ngIf="!user">
+            <h5>Hello Guest <br> Please login</h5>
+        </ng-container>
+        <ng-container *ngIf="user">
+            <h5>
+                <mat-icon>verified_user</mat-icon>
+                <br>
+                Hello {{user.firstName}} {{user.lastName}}
+            </h5>
+            <button mat-menu-item (click)="logout()">
+                <mat-icon>exit_to_app</mat-icon>
+                <span>Logout</span>
+            </button>
+        </ng-container>
+    </mat-menu>
+</div>

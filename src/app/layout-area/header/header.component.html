@@ -1,0 +1,25 @@
+<nav mat-tab-nav-bar>
+    <a class="headerTag" mat-tab-link disabled>Food Land</a>
+    <span class="example-spacer"></span>
+    <ng-container *ngIf="!user || user?.role === '0' ">
+        <a mat-tab-link [routerLink]="paths.homeUrl" routerLinkActive #home="routerLinkActive"
+            [routerLinkActiveOptions]="{exact:true}" [active]="home.isActive">Home</a>
+        <ng-container *ngIf="user" mat-align-tabs="center">
+            <a mat-tab-link [routerLink]="paths.marketUrl" routerLinkActive #products="routerLinkActive"
+                [routerLinkActiveOptions]="{exact:true}" [active]="products.isActive">Market</a>
+            <a mat-tab-link [routerLink]="paths.orderUrl" routerLinkActive #order="routerLinkActive"
+                [routerLinkActiveOptions]="{exact:true}" [active]="order.isActive">Order</a>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngIf="user?.role === 'Admin-Role'">
+        <a mat-tab-link [routerLink]="paths.homeUrl" routerLinkActive #home="routerLinkActive"
+            [routerLinkActiveOptions]="{exact:true}" [active]="home.isActive">Home</a>
+        <a mat-tab-link [routerLink]="paths.adminMarketUrl" routerLinkActive #products="routerLinkActive"
+            [routerLinkActiveOptions]="{exact:true}" [active]="products.isActive">Admin Market</a>
+    </ng-container>
+    <span class="example-spacer"></span>
+    <a mat-tab-link routerLinkActive>
+        <app-auth-log [user]="user"></app-auth-log>
+    </a>
+    <a mat-tab-link (click)="openDialog()">Contact Us</a>
+</nav>

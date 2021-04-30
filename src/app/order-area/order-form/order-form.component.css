@@ -1,0 +1,24 @@
+form {
+    background-color: white;
+    width: 80%;
+}
+h1 {
+    background-color: #eb2f06;
+    margin: 0;
+    padding: 15px;
+}
+h3 {
+    text-decoration: underline 1px solid black;
+}
+mat-form-field{
+    margin: 10px;
+}
+button{
+    padding: 10px;
+    
+}
+
+p{
+    text-decoration: underline solid 1px black;
+    font-weight: bolder;
+}

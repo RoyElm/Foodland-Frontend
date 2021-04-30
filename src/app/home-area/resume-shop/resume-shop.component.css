@@ -1,0 +1,30 @@
+div {
+    position: relative; 
+    height: 100%;
+    width: 450px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div::before {    
+    content: "";
+    background-image: url("../../../assets/images/open-grocery.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    border-radius: 20px;
+    opacity: 0.65;
+
+}
+
+a {
+    position: relative;
+    padding: 15px;
+}

@@ -1,0 +1,38 @@
+<div>
+    <form (submit)="formInfo.valid && login()" #formInfo="ngForm">
+        <h2>Login<mat-icon>https</mat-icon>
+        </h2>
+        <mat-form-field appearance="outline">
+            <mat-label>
+                Email
+            </mat-label>
+            <input matInput placeholder="email" type="email" pattern="^([\w]+@([\w-]+\.)+[\w-]{2,4})?$" name="email"
+                [(ngModel)]="credentials.email" required>
+            <mat-error>
+                {{ errorMessage("email",formInfo) }}
+            </mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline">
+            <mat-label>
+                Password
+            </mat-label>
+            <input matInput onKeyDown="if(event.keyCode === 32)
+            return false" name="password" [(ngModel)]="credentials.password" minlength="6" required
+                [type]="PasswordHide ? 'password' : 'text'">
+            <button mat-icon-button type="button" matSuffix (click)="PasswordHide = !PasswordHide"
+                [attr.aria-label]="'hide password'" [attr.aria-pressed]="PasswordHide">
+                <mat-icon>{{PasswordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error>
+                {{ errorMessage("password",formInfo) }}
+            </mat-error>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button color="primary">Login</button>
+        <a routerLink={{paths.registerUrl}} routerLinkActive="active">
+            <button mat-raised-button color="warn">Register</button>
+        </a>
+    </form>
+
+</div>

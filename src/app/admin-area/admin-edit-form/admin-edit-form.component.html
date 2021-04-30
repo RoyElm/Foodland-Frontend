@@ -1,0 +1,43 @@
+<form *ngIf="ProductForm" [formGroup]="ProductForm" (submit)="updateProduct()">
+    <h1>Update Product</h1>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="categoryId" required>
+            <mat-option *ngFor="let c of categories" [value]="c._id">{{c.categoryName}}</mat-option>
+        </mat-select>
+        <mat-error>
+            {{ errorMessage("categoryId") }}
+        </mat-error>
+    </mat-form-field>
+
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Product Name</mat-label>
+        <input matInput formControlName="name" pattern="^([a-zA-Z0-9\u0590-\u05fe]+[_@./#&+-]?\s?)+$" minlength="2" maxlength="25" required>
+        <mat-error>
+            {{ errorMessage("name") }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Product Price</mat-label>
+        <input matInput formControlName="price" type="number" step="0.01" min="0.4" max="1000" required>
+        <mat-error>
+            {{ errorMessage("price") }}
+        </mat-error>
+    </mat-form-field>
+
+    <br>
+    <button mat-raised-button type="button" (click)="newImageInput.click()">Choose Image File</button>
+    <input type="file" #newImageInput class="ng-hide" name="newImage" (change)="handleImage($event)" accept="image/*" />
+    <br><br>
+    <ng-container *ngIf="preview">
+        <img [src]="preview">
+        <br><br>
+    </ng-container>
+
+    <button mat-raised-button color="primary">Send</button>
+    <button class="backToAddProduct" mat-raised-button type="button" (click)="backToAddProduct()">Back To Add
+        Product</button>
+</form>

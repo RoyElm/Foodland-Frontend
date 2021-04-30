@@ -1,0 +1,49 @@
+nav {
+    background: white;
+}
+
+div{
+    overflow: auto;
+    height: 85%;
+}
+.toolbar-flex {
+    flex: 0.5;
+}
+nav a{
+    height: auto;
+}
+.nothing-in-store {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    position: relative; 
+    height: 60%;
+    width: 450px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+p::before {    
+    content: "";
+    background-image: url("../../../assets/images/empty-store.jfif");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    border-radius: 20px;
+    opacity: 0.65;
+}
+p > span {
+    position: relative;
+    font-size: xx-large;
+    color: white;
+}
+
