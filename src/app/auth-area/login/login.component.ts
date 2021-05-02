@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/global-services/auth.service';
 import { paths } from '../../../environments/paths.environment';
 import { NotificationService } from '../../services/global-services/notification.service';
-import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { FormControl, NgForm } from '@angular/forms';
 
 @Component({
     selector: 'app-login',
@@ -34,7 +34,7 @@ export class LoginComponent {
         }
     }
 
-    public errorMessage(input: string,formInfo:NgForm): string {
+    public errorMessage(input: string, formInfo: NgForm): string {
         const inputControl: FormControl = (formInfo.control.get(input) as FormControl);
         if (inputControl?.hasError('required')) return `${input} is required`;
         if (inputControl?.hasError('minlength')) return 'Min length is 6';

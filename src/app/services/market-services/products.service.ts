@@ -12,6 +12,7 @@ export class ProductsService {
 
     public constructor(private httpClient: HttpClient) { }
 
+    //get all products;
     public async getAllProducts(): Promise<ProductModel[]> {
         if (!store.getState().productsState.products.length) {
             const products = await this.httpClient.get<ProductModel[]>(environment.productsUrl).toPromise();

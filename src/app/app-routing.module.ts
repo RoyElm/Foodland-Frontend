@@ -4,15 +4,16 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home-area/home/home.component';
 import { RegisterComponent } from './auth-area/register/register.component';
-import { LoginGuard } from './services/auth-guard/login.guard';
+import { LoginGuard } from './services/guards/login.guard';
 import { Page404Component } from './layout-area/page404/page404.component';
-import { AdminGuard } from './services/auth-guard/admin.guard';
+import { AdminGuard } from './services/guards/admin.guard';
+import { OrderGuard } from './services/guards/order.guard';
 
 const routes: Routes = [
     { path: "", component: HomeComponent, pathMatch: "full" },
     { path: "auth/register", component: RegisterComponent, pathMatch: "full" },
     { path: "market", canActivate: [LoginGuard], loadChildren: () => import("./market-area/market-area.module").then(m => m.MarketAreaModule), pathMatch: "full" },
-    { path: "order", canActivate: [LoginGuard], loadChildren: () => import("./order-area/order-area.module").then(m => m.OrderAreaModule) },
+    { path: "order", canActivate: [LoginGuard,OrderGuard], loadChildren: () => import("./order-area/order-area.module").then(m => m.OrderAreaModule) },
     { path: "admin-market", canActivate: [AdminGuard], loadChildren: () => import("./admin-area/admin-area.module").then(m => m.AdminAreaModule), pathMatch: "full" },
     { path: "**", component: Page404Component, pathMatch: "full" }
 ];

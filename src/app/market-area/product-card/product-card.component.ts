@@ -1,5 +1,4 @@
-import { paths } from './../../../environments/paths.environment';
-import { AuthService } from 'src/app/services/global-services/auth.service';
+import { TokenHandlerService } from './../../services/global-services/token-handler.service';
 import { NotificationService } from '../../services/global-services/notification.service';
 import { CartItemModel } from '../../models/cart-models/cart-item.model';
 import { CartItemsService } from '../../services/market-services/cart-items.service';
@@ -7,7 +6,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ProductModel } from 'src/app/models/product-models/product.model';
 import { environment } from 'src/environments/environment';
 import store from 'src/app/redux/store';
-import { Router } from '@angular/router';
 import { Unsubscribe } from 'redux';
 
 @Component({
@@ -27,8 +25,7 @@ export class ProductCardComponent implements OnInit {
     public constructor(
         private cartItemsService: CartItemsService,
         private notificationService: NotificationService,
-        private authService: AuthService,
-        private router: Router) { }
+        private tokenHandlerService:TokenHandlerService) { }
 
     public async ngOnInit(): Promise<void> {
         //getting from server product image;
@@ -69,8 +66,7 @@ export class ProductCardComponent implements OnInit {
             this.notificationService.error(error);
             //if statement for getting from server token is over
             if (error.status === 403) {
-                this.authService.logout();
-                this.router.navigateByUrl(paths.homeUrl);
+                this.tokenHandlerService.tokenSessionExpired();
             }
         }
     }
@@ -82,6 +78,10 @@ export class ProductCardComponent implements OnInit {
             await this.cartItemsService.updateCartItemAsync(this.cartItem);
         } catch (error) {
             this.notificationService.error(error);
+            //if statement for getting from server token is over
+            if (error.status === 403) {
+                this.tokenHandlerService.tokenSessionExpired();
+            }
         }
     }
 

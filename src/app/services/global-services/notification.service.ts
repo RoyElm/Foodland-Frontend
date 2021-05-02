@@ -6,6 +6,7 @@ import { ErrorsService } from './errors.service';
     providedIn: 'root'
 })
 export class NotificationService {
+    //Service to handle nice error/success messages 
 
     private myNotyf = new Notyf({ duration: 4000, ripple: true, position: { x: "left", y: "bottom" } });
 

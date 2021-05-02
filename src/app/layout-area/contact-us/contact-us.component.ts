@@ -10,7 +10,7 @@ export class ContactUsComponent {
     constructor(public dialogRef: MatDialogRef<ContactUsComponent>) { }
 
     //closing the dialog
-    onNoClick(): void {
+    public onNoClick(): void {
         this.dialogRef.close();
     }
 

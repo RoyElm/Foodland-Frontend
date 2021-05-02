@@ -1,3 +1,4 @@
+import { TokenHandlerService } from './../../services/global-services/token-handler.service';
 import { environment } from 'src/environments/environment';
 import { AdminService } from '../../services/admin-services/admin.service';
 import { NotificationService } from '../../services/global-services/notification.service';
@@ -27,6 +28,7 @@ export class AdminEditFormComponent implements OnInit, OnChanges {
     public constructor(private _formBuilder: FormBuilder,
         private categoriesService: CategoriesService,
         private notificationService: NotificationService,
+        private tokenHandlerService:TokenHandlerService,
         private adminService: AdminService) { }
 
     public async ngOnInit(): Promise<void> {
@@ -34,7 +36,11 @@ export class AdminEditFormComponent implements OnInit, OnChanges {
             //getting categories using service.
             this.categories = await this.categoriesService.getAllCategoriesAsync();
         } catch (error) {
-            this.notificationService.error(error)
+            this.notificationService.error(error);
+            //if statement for getting from server token is over
+            if (error.status === 403) {
+                this.tokenHandlerService.tokenSessionExpired();
+            }
         }
     }
 
@@ -74,6 +80,10 @@ export class AdminEditFormComponent implements OnInit, OnChanges {
             }
         } catch (error) {
             this.notificationService.error(error);
+            //if statement for getting from server token is over
+            if (error.status === 403) {
+                this.tokenHandlerService.tokenSessionExpired();
+            }
         }
     }
 

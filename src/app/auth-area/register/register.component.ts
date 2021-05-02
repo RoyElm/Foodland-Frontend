@@ -24,6 +24,7 @@ export class RegisterComponent implements OnInit, AfterViewChecked {
         private cd: ChangeDetectorRef,
         private notificationService: NotificationService) { }
 
+    //Telling to the "father" element that his children have been changed
     public ngAfterViewChecked(): void {
         this.cd.detectChanges();
     }

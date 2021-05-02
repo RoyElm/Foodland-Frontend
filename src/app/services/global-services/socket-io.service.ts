@@ -14,7 +14,7 @@ import { updatedCartItemAction } from 'src/app/redux/cart-items-state';
 export class SocketIoService {
 
     private socket: Socket;
-    public constructor(private notificationService:NotificationService) { }
+    public constructor(private notificationService: NotificationService) { }
     public connect(): void {
         // Connect to socket.io:
         this.socket = io(environment.socketIoUrl);
@@ -23,6 +23,7 @@ export class SocketIoService {
             store.dispatch(addedProductAction(addedProduct));
             this.notificationService.success("New Product in store! " + addedProduct.name)
         });
+        
         this.socket.on("msg-from-server-product-updated", (updatedProduct: ProductModel) => {
             store.dispatch(updatedProductAction(updatedProduct));
             this.notificationService.success("Product has been updated! " + updatedProduct.name);
@@ -34,6 +35,7 @@ export class SocketIoService {
         });
     }
 
+    //handling disconnect from socket.
     public disconnect(): void {
         this.socket.disconnect();
     }

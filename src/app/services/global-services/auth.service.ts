@@ -17,6 +17,7 @@ export class AuthService {
 
     public constructor(private httpClient: HttpClient, private socketIoService: SocketIoService) { }
 
+    //handling register
     public async registerAsync(user: AuthModel): Promise<AuthModel> {
         const registeredUser = await this.httpClient.post<AuthModel>(environment.registerUrl, user).toPromise();
         store.dispatch(userRegisteredAction(registeredUser));
@@ -26,6 +27,7 @@ export class AuthService {
         return registeredUser;
     }
 
+    //handling login
     public async loginAsync(credentials: CredentialsModel): Promise<AuthModel> {
         const loggedInUser = await this.httpClient.post<AuthModel>(environment.loginUrl, credentials).toPromise();
         store.dispatch(userLoggedInAction(loggedInUser));
@@ -35,18 +37,21 @@ export class AuthService {
         return loggedInUser;
     }
 
+    //check if user id exist in the Database
     public checkByUserIdAsync = async (firstFormGroup: FormGroup): Promise<boolean> => {
         const existUser = await this.httpClient.post<object[]>(environment.confirmEmailOrIdUrl + "idCard", firstFormGroup.value).toPromise();
         if (existUser.length >= 1) return false;
         return true;
     }
 
+    //check if email exist in the Database
     public checkByEmailAsync = async (firstFormGroup: FormGroup): Promise<boolean> => {
         const existUser = await this.httpClient.post<object[]>(environment.confirmEmailOrIdUrl + "email", firstFormGroup.value).toPromise();
         if (existUser.length >= 1) return false;
         return true;
     }
 
+    //handling logout.
     public logout(): void {
         store.dispatch(resetCartItemsAction());
         store.dispatch(resetShoppingCartAction());

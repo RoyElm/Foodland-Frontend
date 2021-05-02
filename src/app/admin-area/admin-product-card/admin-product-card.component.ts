@@ -17,7 +17,7 @@ export class AdminProductCardComponent implements OnInit {
 
     public imageUrl: string;
 
-    public async ngOnInit(): Promise<void> {
+    public ngOnInit(): void {
         this.imageUrl = environment.productsUrl + "productImages/" + this.product.imageName;
     }
 

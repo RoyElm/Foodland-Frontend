@@ -1,3 +1,4 @@
+import { TokenHandlerService } from './../../services/global-services/token-handler.service';
 import { NotificationService } from 'src/app/services/global-services/notification.service';
 import { OrderModel } from 'src/app/models/cart-models/order.model';
 import { Component, Inject } from '@angular/core';
@@ -13,8 +14,9 @@ export class FinalOrderDialogComponent {
 
     public constructor(
         private notificationService: NotificationService,
-        public dialogRef: MatDialogRef<FinalOrderDialogComponent>,
-        public dialog: MatDialog,
+        private dialogRef: MatDialogRef<FinalOrderDialogComponent>,
+        private dialog: MatDialog,
+        private tokenHandlerService: TokenHandlerService,
         @Inject(MAT_DIALOG_DATA) public order: OrderModel,
         private orderService: OrderService
     ) { }
@@ -33,7 +35,10 @@ export class FinalOrderDialogComponent {
             this.dialogRef.close();
             this.dialog.open(ReceiptDialogComponent, dialogConfig);
         } catch (error) {
-            this.notificationService.error(error)
+            this.notificationService.error(error);
+            if (error.status === 403) {
+                this.tokenHandlerService.tokenSessionExpired();
+            }
         }
     }
 

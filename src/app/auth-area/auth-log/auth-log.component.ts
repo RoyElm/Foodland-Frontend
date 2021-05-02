@@ -14,7 +14,7 @@ export class AuthLogComponent {
     @Input()
     public user: AuthModel;
 
-    constructor(
+    public constructor(
         private notificationService: NotificationService,
         private authService: AuthService,
         private router: Router) { }

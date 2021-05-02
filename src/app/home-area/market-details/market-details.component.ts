@@ -33,14 +33,13 @@ export class MarketDetailsComponent implements OnInit {
             this.countProducts = await this.httpClient.get<number>(environment.productsUrl + "totalProduct").toPromise();
             this.countOrders = await this.httpClient.get<number>(environment.orderUrl + "totalOrders").toPromise();
             this.totalPrice = this.cartItemsService.getTotalPrice();
-
+            
             //handling shopping cart change in store;
             this.unsubscribeStore = store.subscribe(() => {
                 this.shoppingCart = store.getState().shoppingCartState.shoppingCart;
                 this.totalPrice = this.cartItemsService.getTotalPrice();
             })
         } catch (error) {
-
             this.notificationService.error(error);
         }
     }

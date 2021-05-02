@@ -1,3 +1,4 @@
+import { TokenHandlerService } from './../../services/global-services/token-handler.service';
 import { AdminService } from '../../services/admin-services/admin.service';
 import { NotificationService } from '../../services/global-services/notification.service';
 import { CategoriesService } from '../../services/market-services/categories.service';
@@ -12,6 +13,7 @@ import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } f
 })
 export class AdminAddFormComponent implements OnInit {
 
+    //handling reset form.
     @ViewChild(FormGroupDirective) public myForm: FormGroupDirective;
 
     public ProductForm: FormGroup;
@@ -22,6 +24,7 @@ export class AdminAddFormComponent implements OnInit {
     public constructor(private _formBuilder: FormBuilder,
         private categoriesService: CategoriesService,
         private notificationService: NotificationService,
+        private tokenHandlerService: TokenHandlerService,
         private adminService: AdminService) { }
 
     public async ngOnInit(): Promise<void> {
@@ -38,7 +41,12 @@ export class AdminAddFormComponent implements OnInit {
             });
 
         } catch (error) {
-            this.notificationService.error(error)
+            this.notificationService.error(error);
+
+            //if statement for getting from server token is over
+            if (error.status === 403) {
+                this.tokenHandlerService.tokenSessionExpired();
+            }
         }
     }
 
@@ -66,12 +74,16 @@ export class AdminAddFormComponent implements OnInit {
                 this.resetForm();
             }
         } catch (error) {
-            this.notificationService.error(error)
+            this.notificationService.error(error);
+            //if statement for getting from server token is over
+            if (error.status === 403) {
+                this.tokenHandlerService.tokenSessionExpired();
+            }
         }
     }
 
     //Reset form after submit
-    public resetForm = () => {
+    public resetForm = (): void => {
         this.formSubmitted = false;
         this.preview = '';
         this.ProductForm.reset();

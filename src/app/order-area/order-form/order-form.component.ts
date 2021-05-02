@@ -7,6 +7,9 @@ import { OrderModel } from 'src/app/models/cart-models/order.model';
 import { FinalOrderDialogComponent } from '../final-order-dialog/final-order-dialog.component';
 import { DateFilterFn } from '@angular/material/datepicker';
 import store from '../../redux/store';
+import { NotificationService } from 'src/app/services/global-services/notification.service';
+import { TokenHandlerService } from 'src/app/services/global-services/token-handler.service';
+import { AuthModel } from 'src/app/models/auth-models/auth.model';
 
 @Component({
     selector: 'app-order-form',
@@ -14,31 +17,43 @@ import store from '../../redux/store';
     styleUrls: ['./order-form.component.css']
 })
 export class OrderFormComponent implements OnInit {
+
     public newOrder = new OrderModel();
     public cities = Cities;
     public currentDate: Date;
     public filterUsedDates: DateFilterFn<Date>;
+    public user: AuthModel = store.getState().authState.user;
 
     public constructor(public dialog: MatDialog,
         private cartItemsService: CartItemsService,
+        private notificationService: NotificationService,
+        private tokenHandlerService: TokenHandlerService,
         private orderService: OrderService
     ) {
-        //handling newOrder variables and getting them from store;
+        //handling newOrder variables;
         this.newOrder.shoppingCartId = store.getState().shoppingCartState.shoppingCart._id;
-        this.newOrder.userId = store.getState().authState.user._id;
-        this.newOrder.addressToDeliver = store.getState().authState.user.address;
-        this.newOrder.cityToDeliver = store.getState().authState.user.city;
+        this.newOrder.userId = this.user._id;
+        this.newOrder.addressToDeliver = this.user.address;
+        this.newOrder.cityToDeliver = this.user.city;
     }
 
     public async ngOnInit(): Promise<void> {
-        //handle date Picker min and get dateArray to prevent specific dates to show up;
-        this.currentDate = new Date();
-        const dateArray = await this.getDateArray();
-        this.filterUsedDates = (date: Date): boolean => {
-            const dateNow = (date || new Date()).toLocaleDateString();
-            const count = this.getDateCount(dateArray, dateNow);
-            // Prevent 3 orders to be in same day.
-            return count < 3
+        try {
+            //handle date Picker min and get dateArray to prevent specific dates to show up;
+            this.currentDate = new Date();
+            const dateArray = await this.getDateArray();
+            this.filterUsedDates = (date: Date): boolean => {
+                const dateNow = (date || new Date()).toLocaleDateString();
+                const count = this.getDateCount(dateArray, dateNow);
+                // Prevent 3 orders to be in same day.
+                return count < 3
+            }
+        } catch (error) {
+            this.notificationService.error(error);
+            //if statement for getting from server token is over
+            if (error.status === 403) {
+                this.tokenHandlerService.tokenSessionExpired();
+            }
         }
     }
 
@@ -51,10 +66,18 @@ export class OrderFormComponent implements OnInit {
 
     //getting ALL Orders from service and creating dateArray with orders dates;
     private getDateArray = async (): Promise<string[]> => {
-        const dateArray: string[] = [];
-        const orders = await this.orderService.getAllOrdersAsync();
-        orders.map(o => dateArray.push(new Date(o.dateToDeliver).toLocaleDateString()))
-        return dateArray;
+        try {
+            const dateArray: string[] = [];
+            const orders = await this.orderService.getAllOrdersAsync();
+            orders.map(o => dateArray.push(new Date(o.dateToDeliver).toLocaleDateString()))
+            return dateArray;
+        } catch (error) {
+            this.notificationService.error(error);
+            if (error.status === 403) {
+                this.tokenHandlerService.tokenSessionExpired();
+            }
+            return [];
+        }
     }
 
     //handling order form and opening finalOrderDialogComponent as dialog with newOrder Data;

@@ -10,6 +10,7 @@ export class CategoriesService {
 
     public constructor(private httpClient: HttpClient) { }
 
+    //getting all categories;
     public async getAllCategoriesAsync(): Promise<CategoryModel[]> {
         return await this.httpClient.get<CategoryModel[]>(environment.categoriesUrl).toPromise();;
     }

@@ -1,3 +1,4 @@
+import { TokenHandlerService } from './../../services/global-services/token-handler.service';
 import { OrderService } from './../../services/market-services/order.service';
 import { paths } from './../../../environments/paths.environment';
 import { NotificationService } from './../../services/global-services/notification.service';
@@ -18,6 +19,7 @@ export class ReceiptDialogComponent {
         private router: Router,
         private notificationService: NotificationService,
         public dialogRef: MatDialogRef<ReceiptDialogComponent>,
+        private tokenHandlerService: TokenHandlerService,
         @Inject(MAT_DIALOG_DATA) public ordered: OrderModel,
     ) { }
 
@@ -30,17 +32,20 @@ export class ReceiptDialogComponent {
 
     //handling downloading receipt;
     public downloadReceipt(): void {
-        try {
-            this.orderService
-                .downloadReceiptAsync(this.ordered._id)
-                .subscribe(blob => saveAs(blob, `${this.ordered._id}.pdf`));
-
-            this.dialogRef.close();
-            this.notificationService.success(`${new Date(this.ordered.dateToDeliver).toLocaleDateString()} See you then :)`);
-            this.router.navigateByUrl(paths.homeUrl);
-        } catch (error) {
-            this.notificationService.error(error)
-        }
+        this.orderService
+            .downloadReceiptAsync(this.ordered._id)
+            .subscribe(blob => saveAs(blob, `${this.ordered._id}.pdf`), error => {
+                if (error.status === 403) {
+                    this.notificationService.error("Your login session has expired. Please login again.")
+                    this.tokenHandlerService.tokenSessionExpired();
+                } else {
+                    this.notificationService.error(error);
+                }
+            }
+            );
+        this.dialogRef.close();
+        this.notificationService.success(`${new Date(this.ordered.dateToDeliver).toLocaleDateString()} See you then :)`);
+        this.router.navigateByUrl(paths.homeUrl);
     }
-
 }
+

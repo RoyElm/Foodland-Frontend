@@ -10,9 +10,11 @@ import store from 'src/app/redux/store';
 })
 export class AdminSideControlComponent implements OnInit {
     public unSubscribeFromStore: Unsubscribe;
-    public productToEdit: ProductModel = store.getState().adminProductState.product;
+    public productToEdit: ProductModel;
 
     public ngOnInit(): void {
+        this.productToEdit = store.getState().adminProductState.product;
+        
         //subscribe to store for any further changes in products
         this.unSubscribeFromStore = store.subscribe(() => {
             this.productToEdit = store.getState().adminProductState.product;

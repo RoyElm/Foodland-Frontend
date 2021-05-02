@@ -1,10 +1,8 @@
-import { paths } from './../../../environments/paths.environment';
+import { TokenHandlerService } from './../../services/global-services/token-handler.service';
 import { ShoppingCartService } from '../../services/market-services/shopping-cart.service';
 import { Component, OnInit } from '@angular/core';
 import { ShoppingCartModel } from 'src/app/models/cart-models/shopping-cart.model';
 import { NotificationService } from 'src/app/services/global-services/notification.service';
-import { AuthService } from 'src/app/services/global-services/auth.service';
-import { Router } from '@angular/router';
 import store from '../../redux/store';
 import { resetCartItemsAction } from 'src/app/redux/cart-items-state';
 
@@ -19,8 +17,7 @@ export class MarketComponent implements OnInit {
     public constructor(
         private shoppingCartService: ShoppingCartService,
         private notificationService: NotificationService,
-        private authService: AuthService,
-        private router: Router) { }
+        private tokenHandlerService:TokenHandlerService) { }
 
     public async ngOnInit(): Promise<void> {
         try {
@@ -37,8 +34,7 @@ export class MarketComponent implements OnInit {
             this.notificationService.error(error);
             //if statement for getting from server token is over
             if (error.status === 403) {
-                this.authService.logout();
-                this.router.navigateByUrl(paths.homeUrl);
+                this.tokenHandlerService.tokenSessionExpired();
             }
         }
     }

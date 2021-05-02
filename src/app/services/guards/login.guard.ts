@@ -1,21 +1,21 @@
-import { paths } from '../../../environments/paths.environment';
+import { NotificationService } from '../global-services/notification.service';
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import store from '../../redux/store';
-import { NotificationService } from '../global-services/notification.service';
+import { paths } from 'src/environments/paths.environment';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AdminGuard implements CanActivate {
-
+export class LoginGuard implements CanActivate {
 
     public constructor(private notificationService: NotificationService, private router: Router) { }
 
+    //blocking un logged to persons to access any pages
     public canActivate(): boolean {
         const user = store.getState().authState.user;
-        if (user && user.role === "Admin-Role") return true;
-        
+        if (user && user.role === "0") return true;
+
         if (!user)
             this.notificationService.error("You are not logged in!");
         else
@@ -24,5 +24,4 @@ export class AdminGuard implements CanActivate {
         this.router.navigateByUrl(paths.homeUrl);
         return false;
     }
-
 }

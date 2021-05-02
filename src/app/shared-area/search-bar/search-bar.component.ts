@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'app-search-bar',
@@ -13,12 +13,12 @@ export class SearchBarComponent {
     public productToSearch = new EventEmitter<string>();
 
     //handling search output the string;
-    public searchProduct() {
+    public searchProduct(): void {
         this.productToSearch.emit(this.productNameValue);
     }
 
     //clearing the search input and output empty string;
-    public clear() {
+    public clear(): void {
         this.productNameValue = '';
         this.productToSearch.emit(this.productNameValue);
     }

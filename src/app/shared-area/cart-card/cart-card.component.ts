@@ -1,7 +1,9 @@
+import { TokenHandlerService } from './../../services/global-services/token-handler.service';
 import { CartItemsService } from '../../services/market-services/cart-items.service';
 import { environment } from '../../../environments/environment';
 import { Component, Input, OnInit } from '@angular/core';
 import { CartItemModel } from 'src/app/models/cart-models/cart-item.model';
+import { NotificationService } from 'src/app/services/global-services/notification.service';
 
 @Component({
     selector: 'app-cart-card',
@@ -17,7 +19,10 @@ export class CartCardComponent implements OnInit {
 
     public imageUrl: string;
 
-    public constructor(private cartItemsService: CartItemsService) { }
+    public constructor(
+        private cartItemsService: CartItemsService,
+        private notificationService: NotificationService,
+        private tokenHandlerService:TokenHandlerService) { }
 
     public ngOnInit(): void {
         //getting product images from server;
@@ -40,7 +45,15 @@ export class CartCardComponent implements OnInit {
     }
 
     //handling delete specific cart item;
-    public deleteCartItem(): void {
-        this.cartItemsService.deleteCartItemAsync(this.cartItem._id);
+    public async deleteCartItem(): Promise<void> {
+        try {
+            await this.cartItemsService.deleteCartItemAsync(this.cartItem._id);
+        } catch (error) {
+            this.notificationService.error(error);
+            //if statement for getting from server token is over
+            if (error.status === 403) {
+                this.tokenHandlerService.tokenSessionExpired();
+            }
+        }
     }
 }

@@ -13,6 +13,7 @@ export class AdminService {
 
     public constructor(private httpClient: HttpClient) { }
 
+    //handling add product to market
     public async addProductAsync(product: ProductModel): Promise<void> {
         const myFormData = new FormData();
         myFormData.append("name", product.name);
@@ -22,6 +23,7 @@ export class AdminService {
         await this.httpClient.post<ProductModel>(environment.adminPanelUrl + "add-product", myFormData).toPromise();
     }
 
+    //handling update product to market
     public async updateProductAsync(product: ProductModel): Promise<ProductModel> {
         const myFormData = new FormData();
         myFormData.append("name", product.name);

@@ -13,6 +13,7 @@ export class ShoppingCartState {
 
 export enum ShoppingCartActionType {
     ShoppingCartDownloaded = "ShoppingCartDownloaded",
+    ShoppingCartUpdated = "ShoppingCartUpdated",
     ShoppingCartCreated = "ShoppingCartCreated",
     ShoppingCartReset = "ShoppingCartReset"
 }
@@ -24,6 +25,10 @@ export interface ShoppingCartAction {
 
 export function downloadedShoppingCartAction(shoppingCart: ShoppingCartModel): ShoppingCartAction {
     return { type: ShoppingCartActionType.ShoppingCartDownloaded, payload: shoppingCart };
+}
+
+export function updatedShoppingCartAction(shoppingCart: ShoppingCartModel): ShoppingCartAction {
+    return { type: ShoppingCartActionType.ShoppingCartUpdated, payload: shoppingCart };
 }
 
 export function createdShoppingCartAction(shoppingCart: ShoppingCartModel): ShoppingCartAction {
@@ -43,6 +48,7 @@ export function ShoppingCartReducer(
     switch (action.type) {
         case ShoppingCartActionType.ShoppingCartCreated:
         case ShoppingCartActionType.ShoppingCartDownloaded:
+        case ShoppingCartActionType.ShoppingCartUpdated:
             newState.shoppingCart = action.payload;
             break;
         case ShoppingCartActionType.ShoppingCartReset:

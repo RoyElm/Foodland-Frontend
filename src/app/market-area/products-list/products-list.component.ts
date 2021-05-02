@@ -1,5 +1,5 @@
+import { TokenHandlerService } from './../../services/global-services/token-handler.service';
 import { Unsubscribe } from 'redux';
-import { AuthService } from 'src/app/services/global-services/auth.service';
 import { ProductsService } from '../../services/market-services/products.service';
 import { CategoryModel } from '../../models/product-models/category.model';
 import { CategoriesService } from '../../services/market-services/categories.service';
@@ -21,7 +21,7 @@ export class ProductsListComponent implements OnInit {
     public constructor(
         private categoriesService: CategoriesService,
         private productsService: ProductsService,
-        private authService: AuthService) { }
+        private tokenHandlerService:TokenHandlerService) { }
 
     public async ngOnInit(): Promise<void> {
         try {
@@ -40,7 +40,7 @@ export class ProductsListComponent implements OnInit {
             
         } catch (error) {
             if (error.status === 403) {
-                this.authService.logout();
+                this.tokenHandlerService.tokenSessionExpired();
             }
         }
     }

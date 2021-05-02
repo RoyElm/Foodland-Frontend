@@ -1,3 +1,4 @@
+import { TokenHandlerService } from './../../services/global-services/token-handler.service';
 import { ShoppingCartService } from '../../services/market-services/shopping-cart.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { ShoppingCartModel } from 'src/app/models/cart-models/shopping-cart.model';
@@ -21,6 +22,7 @@ export class ResumeShopComponent implements OnInit {
 
     public constructor(
         private notificationService: NotificationService,
+        private tokenHandlerService:TokenHandlerService,
         private shoppingCartService: ShoppingCartService) { }
 
     public async ngOnInit(): Promise<void> {
@@ -30,15 +32,23 @@ export class ResumeShopComponent implements OnInit {
                 this.shoppingCart = await this.shoppingCartService.getShoppingCartAsync();
             }
         } catch (error) {
-            this.notificationService.error(error)
+            this.notificationService.error(error);
+            //if statement for getting from server token is over
+            if (error.status === 403) {
+                this.tokenHandlerService.tokenSessionExpired();
+            }
         }
     }
 
     //if user don't have shopping cart, creating new one.
     public async createShoppingCart(): Promise<void> {
-        this.shoppingCart = new ShoppingCartModel();
-        this.shoppingCart.userId = store.getState().authState.user._id;
-        this.shoppingCart = await this.shoppingCartService.createShoppingCart(this.shoppingCart);
+        try {
+            this.shoppingCart = new ShoppingCartModel();
+            this.shoppingCart.userId = store.getState().authState.user._id;
+            this.shoppingCart = await this.shoppingCartService.createShoppingCart(this.shoppingCart);
+        } catch (error) {
+            this.notificationService.error(error)
+        }
     }
 
 

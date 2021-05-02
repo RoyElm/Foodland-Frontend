@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class ErrorsService {
 
+    //handling errors;
     public getError(err: any) {
 
         if (typeof err === "string") return err;

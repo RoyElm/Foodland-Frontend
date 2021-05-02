@@ -1,3 +1,5 @@
+import { TokenHandlerService } from './../../services/global-services/token-handler.service';
+import { NotificationService } from './../../services/global-services/notification.service';
 import { CartItemsService } from '../../services/market-services/cart-items.service';
 import { Component, Input, OnInit } from '@angular/core';
 import store from 'src/app/redux/store';
@@ -26,10 +28,12 @@ export class CartListComponent implements OnInit {
     public totalQuantity = 0;
     public deleteCart = false;
 
-    public constructor(private cartItemsService: CartItemsService) { }
+    public constructor(
+        private cartItemsService: CartItemsService,
+        private notificationService: NotificationService,
+        private tokenHandlerService: TokenHandlerService) { }
 
-    public async ngOnInit(): Promise<void> {
-
+    public ngOnInit(): void {
         //checking if shoppingCart Exist and get cart items from store;
         if (this.shoppingCart.open) {
             this.cartItems = store.getState().cartItemState.cartItems;
@@ -46,7 +50,7 @@ export class CartListComponent implements OnInit {
     }
 
     //handling search products in cart list (will active only in order component);
-    public searchProduct(name: string) {
+    public searchProduct(name: string): void {
         this.cartItems.map(p => {
             if (name.length && p.product.name.toLowerCase().includes(name.toLowerCase())) {
                 p.background = { background: 'yellow' }
@@ -57,13 +61,21 @@ export class CartListComponent implements OnInit {
     }
 
     //handling delete all cart items from shopping cart;
-    public async deleteCartAsync() {
-        await this.cartItemsService.deleteAllCartItemsAsync();
-        this.deleteCart = false;
+    public async deleteCartAsync(): Promise<void> {
+        try {
+            await this.cartItemsService.deleteAllCartItemsAsync();
+            this.deleteCart = false;
+        } catch (error) {
+            this.notificationService.error(error);
+            //if statement for getting from server token is over
+            if (error.status === 403) {
+                this.tokenHandlerService.tokenSessionExpired();
+            }
+        }
     }
 
     //cancel the subscribe to avoid any memory leak; 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.cartItems) {
             this.cartItems.map(p => { p.background = { background: 'white' } });
         }

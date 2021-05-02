@@ -14,12 +14,13 @@ export class ShoppingCartService {
 
     public constructor(private httpClient: HttpClient) { }
 
+    //getting shopping cart with his cart items from server and updating redux;
     public async getShoppingCartAsync(): Promise<ShoppingCartModel> {
         const storeShoppingCart = store.getState().shoppingCartState.shoppingCart;
         const userId = store.getState().authState.user._id;
         if (!storeShoppingCart || userId !== storeShoppingCart.userId) {
             const shoppingCart = await this.httpClient.get<ShoppingCartModel>(environment.shoppingCartUrl + userId).toPromise();
-            if(shoppingCart){
+            if (shoppingCart) {
                 this.downloadedCartItems(shoppingCart.cartItems);
             }
             store.dispatch(downloadedShoppingCartAction(shoppingCart))
@@ -27,12 +28,14 @@ export class ShoppingCartService {
         return store.getState().shoppingCartState.shoppingCart;
     }
 
+    //creating new shopping cart;
     public async createShoppingCart(shoppingCart: ShoppingCartModel): Promise<ShoppingCartModel> {
         const createdShoppingCart = await this.httpClient.post<ShoppingCartModel>(environment.shoppingCartUrl, shoppingCart).toPromise();
         store.dispatch(createdShoppingCartAction(createdShoppingCart))
         return createdShoppingCart;
     }
 
+    //handling download cart items to redux state;
     public downloadedCartItems(cartItems: CartItemModel[]) {
         store.dispatch(downloadedCartItemsAction(cartItems));
     }
