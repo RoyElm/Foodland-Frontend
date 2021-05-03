@@ -12,10 +12,10 @@
             <br>
             Total Price in cart is {{totalPrice | currency}}
         </p>
-        <p *ngIf="!shoppingCart.open && shoppingCart.userId === user._id">
-            Your last purchase was on {{shoppingCart.cartCreationDate | date}}
+        <p *ngIf="!shoppingCart.open && lastOrder">
+            Your last purchase was on {{lastOrder.orderDate | date}}
             <br>
-            Total Price in cart were {{totalPrice | currency}}
+            Total Price in cart were {{lastOrder.totalPrice | currency}}
         </p>
     </div>
     <div class="box" *ngIf="user?.role === 'Admin-Role'">

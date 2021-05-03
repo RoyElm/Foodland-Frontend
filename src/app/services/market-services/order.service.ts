@@ -29,6 +29,11 @@ export class OrderService {
         return this.httpClient.get<OrderModel[]>(environment.orderUrl).toPromise();
     }
 
+    //get last order from server by user id.
+    public getLastOrderByUserIdAsync(userId: string): Promise<OrderModel> {
+        return this.httpClient.get<OrderModel>(environment.orderUrl + "lastOrder/" + userId).toPromise();
+    }
+
     //handling download receipt;
     public downloadReceiptAsync(orderId: string): Observable<Blob> {
         return this.httpClient.get(environment.orderUrl + "receipt/" + orderId, {
