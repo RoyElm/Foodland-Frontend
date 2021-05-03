@@ -14,8 +14,8 @@ import { Cities } from '../../helpers/cities-data';
 })
 export class RegisterComponent implements OnInit, AfterViewChecked {
 
-    public firstFormGroup: FormGroup;
-    public secondFormGroup: FormGroup;
+    public userFormGroup: FormGroup;
+    public addressFormGroup: FormGroup;
     public cities = Cities;
     public paths = paths;
 
@@ -31,15 +31,15 @@ export class RegisterComponent implements OnInit, AfterViewChecked {
 
     public ngOnInit(): void {
         //specify that we have 2 form groups that will specify in "children" components;
-        this.firstFormGroup = this._formBuilder.group({});
-        this.secondFormGroup = this._formBuilder.group({});
+        this.userFormGroup = this._formBuilder.group({});
+        this.addressFormGroup = this._formBuilder.group({});
     }
 
     //handling register;
     public register = async (): Promise<void> => {
         try {
-            delete this.firstFormGroup.value["userForm"]['confirmPassword'];
-            const newUser: AuthModel = { ...this.firstFormGroup.value["userForm"], ...this.secondFormGroup.value["addressForm"] };
+            delete this.userFormGroup.value["userForm"]['confirmPassword'];
+            const newUser: AuthModel = { ...this.userFormGroup.value["userForm"], ...this.addressFormGroup.value["addressForm"] };
             newUser.email = newUser.email.toLowerCase();
             const registeredUser = await this.authService.registerAsync(newUser);
             this.notificationService.success(`Welcome! ${registeredUser.firstName}`)

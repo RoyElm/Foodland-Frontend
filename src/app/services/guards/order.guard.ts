@@ -26,6 +26,5 @@ export class OrderGuard implements CanActivate {
         }
 
         return true;
-
     }
 }

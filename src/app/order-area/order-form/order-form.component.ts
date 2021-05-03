@@ -21,6 +21,7 @@ export class OrderFormComponent implements OnInit {
     public newOrder = new OrderModel();
     public cities = Cities;
     public currentDate: Date;
+    public maxDate: Date;
     public filterUsedDates: DateFilterFn<Date>;
     public user: AuthModel = store.getState().authState.user;
 
@@ -41,6 +42,8 @@ export class OrderFormComponent implements OnInit {
         try {
             //handle date Picker min and get dateArray to prevent specific dates to show up;
             this.currentDate = new Date();
+            this.maxDate = new Date(2030, 0, 0);
+
             const dateArray = await this.getDateArray();
             this.filterUsedDates = (date: Date): boolean => {
                 const dateNow = (date || new Date()).toLocaleDateString();

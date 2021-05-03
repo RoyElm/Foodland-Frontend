@@ -18,10 +18,11 @@ export class AdminProductListComponent implements OnInit {
     public products: ProductModel[];
     public productsSwitched: ProductModel[];
     public unSubscribeFromStore: Unsubscribe;
+    public handleIdChange:string;
 
     public constructor(private categoriesService: CategoriesService,
         private productsService: ProductsService,
-        private tokenHandlerService:TokenHandlerService) { }
+        private tokenHandlerService: TokenHandlerService) { }
 
     public async ngOnInit(): Promise<void> {
         try {
@@ -36,7 +37,12 @@ export class AdminProductListComponent implements OnInit {
             //subscribe for any further changes in store.
             this.unSubscribeFromStore = store.subscribe(async () => {
                 this.products = await this.productsService.getAllProducts();
-                this.productsSwitched = [...this.products];
+                //handling store change but staying in same product category;
+                if (this.handleIdChange) {
+                    this.changeCategory(this.handleIdChange)
+                } else {
+                    this.productsSwitched = [...this.products];
+                }
             })
         } catch (error) {
             //if statement for getting from server token is over
@@ -46,16 +52,17 @@ export class AdminProductListComponent implements OnInit {
         }
     }
 
-    //handling category change
+    //Handle click on any category section except "All".
     public changeCategory(_id: string): void {
-        this.productsSwitched = this.products.filter(p => p.categoryId === _id);
+        this.productsSwitched = [...this.products.filter(p => p.categoryId === _id)];
+        this.handleIdChange = _id;
     }
 
-    //handling category change
+    //Handle click on "All" category section.
     public allCategory(): void {
         this.productsSwitched = [...this.products];
+        this.handleIdChange = undefined;
     }
-
     //handling search for specify product
     public searchProduct(productName: string): void {
         this.productsSwitched = this.products.filter(p => p.name.toLowerCase().includes(productName.toLowerCase()));

@@ -12,7 +12,7 @@ import { NotificationService } from 'src/app/services/global-services/notificati
 export class UserDetailsFormComponent implements OnInit {
 
     public subForm: FormGroup;
-    public firstFormGroup: FormGroup;
+    public userFormGroup: FormGroup;
     public PasswordHide = true;
     public confirmPasswordHide = true;
 
@@ -32,8 +32,8 @@ export class UserDetailsFormComponent implements OnInit {
 
         //adding control to the "father" form group
         //element to access it from "father" component;
-        this.firstFormGroup = this.ctrlContainer.form;
-        this.firstFormGroup.addControl("userForm", this.subForm);
+        this.userFormGroup = this.ctrlContainer.form;
+        this.userFormGroup.addControl("userForm", this.subForm);
     }
 
     //function to handle not same passwords;

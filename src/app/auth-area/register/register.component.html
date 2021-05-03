@@ -1,9 +1,9 @@
 <div>
     <h1>Sign Up</h1>
     <mat-horizontal-stepper [linear]="true" #stepper="matHorizontalStepper">
-        <mat-step [stepControl]="firstFormGroup">
+        <mat-step [stepControl]="userFormGroup">
             <ng-template matStepLabel>Fill out your user details</ng-template>
-            <form [formGroup]="firstFormGroup">
+            <form [formGroup]="userFormGroup">
                 <app-user-details-form></app-user-details-form>
             </form>
             <div class="buttonGroup">
@@ -11,13 +11,13 @@
                 <a mat-button routerLink={{paths.homeUrl}}>Already have user?</a>
             </div>
         </mat-step>
-        <mat-step [stepControl]="secondFormGroup">
+        <mat-step [stepControl]="addressFormGroup">
             <ng-template matStepLabel>Fill out your address</ng-template>
-            <form [formGroup]="secondFormGroup" (submit)="register()">
+            <form [formGroup]="addressFormGroup" (submit)="register()">
                 <app-address-details-form></app-address-details-form>
                 <div class="buttonGroup">
                     <button mat-raised-button color="warn" matStepperPrevious>Back</button>
-                    <button mat-raised-button color="primary" [disabled]="!secondFormGroup.valid">Submit</button>
+                    <button mat-raised-button color="primary" [disabled]="!addressFormGroup.valid">Submit</button>
                     <a mat-button routerLink={{paths.homeUrl}}>Already have user?</a>
                 </div>
             </form>

@@ -18,6 +18,8 @@ export class ProductsListComponent implements OnInit {
     public products: ProductModel[];
     public productsSwitched: ProductModel[];
     public unSubscribeFromStore: Unsubscribe;
+    public handleIdChange:string;
+
     public constructor(
         private categoriesService: CategoriesService,
         private productsService: ProductsService,
@@ -35,7 +37,13 @@ export class ProductsListComponent implements OnInit {
              //subscribe for any further changes in store.
              this.unSubscribeFromStore = store.subscribe(async () => {
                 this.products = await this.productsService.getAllProducts();
-                this.productsSwitched = [...this.products];
+                //handling store change but staying in same product category;
+                if(this.handleIdChange){
+                    this.changeCategory(this.handleIdChange)
+                }else {
+                    this.productsSwitched = [...this.products];
+                }
+                
             })
             
         } catch (error) {
@@ -48,11 +56,13 @@ export class ProductsListComponent implements OnInit {
     //Handle click on any category section except "All".
     public changeCategory(_id: string): void {
         this.productsSwitched = [...this.products.filter(p => p.categoryId === _id)];
+        this.handleIdChange = _id;
     }
 
     //Handle click on "All" category section.
     public allCategory(): void {
         this.productsSwitched = [...this.products];
+        this.handleIdChange = undefined;
     }
 
     //handle search product;

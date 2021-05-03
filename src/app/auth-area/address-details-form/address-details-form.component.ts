@@ -10,7 +10,7 @@ import { Cities } from 'src/app/helpers/cities-data';
 export class AddressDetailsFormComponent implements OnInit {
 
     public cities = Cities;
-    public secondFormGroup: FormGroup;
+    public addressFormGroup: FormGroup;
     public subForm: FormGroup;
 
     public constructor(
@@ -28,8 +28,8 @@ export class AddressDetailsFormComponent implements OnInit {
 
         //adding control to the "father" form group
         //element to access it from "father" component;
-        this.secondFormGroup = this.ctrlContainer.form;
-        this.secondFormGroup.addControl("addressForm", this.subForm);
+        this.addressFormGroup = this.ctrlContainer.form;
+        this.addressFormGroup.addControl("addressForm", this.subForm);
     }
 
     //handling error messages;
