@@ -30,6 +30,7 @@
         <mat-error *ngIf="dateInfo.errors?.required ">Date is required</mat-error>
         <mat-error *ngIf="dateInfo.errors?.matDatepickerMax">You can't choose date after 31/12/2029</mat-error>
         <mat-error *ngIf="dateInfo.errors?.matDatepickerMin">You can't choose date before {{currentDate | date}}</mat-error>
+        <mat-error *ngIf="dateInfo.errors?.matDatepickerFilter ">You can't choose date that have 3 orders already, please choose another</mat-error>
     </mat-form-field>
     <p>
         Only 3 Orders Available Per Date!

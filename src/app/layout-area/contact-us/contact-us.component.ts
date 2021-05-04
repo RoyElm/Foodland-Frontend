@@ -7,7 +7,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class ContactUsComponent {
 
-    constructor(public dialogRef: MatDialogRef<ContactUsComponent>) { }
+    public constructor(public dialogRef: MatDialogRef<ContactUsComponent>) { }
 
     //closing the dialog
     public onNoClick(): void {

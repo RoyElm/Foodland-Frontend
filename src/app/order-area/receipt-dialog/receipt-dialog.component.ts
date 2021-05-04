@@ -1,10 +1,8 @@
 import { TokenHandlerService } from './../../services/global-services/token-handler.service';
 import { OrderService } from './../../services/market-services/order.service';
-import { paths } from './../../../environments/paths.environment';
 import { NotificationService } from './../../services/global-services/notification.service';
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { saveAs } from 'file-saver';
 import { OrderModel } from 'src/app/models/cart-models/order.model';
 
@@ -16,7 +14,6 @@ export class ReceiptDialogComponent {
 
     public constructor(
         private orderService: OrderService,
-        private router: Router,
         private notificationService: NotificationService,
         public dialogRef: MatDialogRef<ReceiptDialogComponent>,
         private tokenHandlerService: TokenHandlerService,
@@ -25,9 +22,7 @@ export class ReceiptDialogComponent {
 
     //handling close dialog and routing the user to home page after finish order.
     public onNoClick(): void {
-        this.dialogRef.close();
-        this.notificationService.success(`${new Date(this.ordered.dateToDeliver).toLocaleDateString()} See you then :)`);
-        this.router.navigateByUrl(paths.homeUrl);
+        this.dialogRef.close(this.ordered);
     }
 
     //handling downloading receipt;
@@ -43,9 +38,7 @@ export class ReceiptDialogComponent {
                 }
             }
             );
-        this.dialogRef.close();
-        this.notificationService.success(`${new Date(this.ordered.dateToDeliver).toLocaleDateString()} See you then :)`);
-        this.router.navigateByUrl(paths.homeUrl);
+        this.dialogRef.close(this.ordered);
     }
 }
 

@@ -26,7 +26,7 @@ export class MarketDetailsComponent implements OnInit {
     public unsubscribeStore: Unsubscribe;
     public lastOrder: OrderModel;
 
-    constructor(
+    public constructor(
         private httpClient: HttpClient,
         private notificationService: NotificationService,
         private orderService: OrderService,

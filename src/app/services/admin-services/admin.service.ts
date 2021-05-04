@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { addedProductAction, updatedProductAction } from 'src/app/redux/products-state';
 import { environment } from 'src/environments/environment';
 import { ProductModel } from '../../models/product-models/product.model';
 import { adminPanelProductAddAction } from '../../redux/admin-state';

@@ -1,5 +1,4 @@
 import { CartItemModel } from "../models/cart-models/cart-item.model";
-import { ShoppingCartModel } from "../models/cart-models/shopping-cart.model";
 
 export class CartItemsState {
     public cartItems: CartItemModel[] = [];

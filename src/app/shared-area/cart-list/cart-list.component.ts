@@ -15,7 +15,7 @@ import { ShoppingCartModel } from 'src/app/models/cart-models/shopping-cart.mode
 })
 export class CartListComponent implements OnInit {
     @Input()
-    shoppingCart: ShoppingCartModel;
+    public shoppingCart: ShoppingCartModel;
 
     //handling if "Father" Element want to hidden specific components;
     @Input()

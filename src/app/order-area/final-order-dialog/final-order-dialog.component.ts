@@ -5,6 +5,8 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { OrderService } from 'src/app/services/market-services/order.service';
 import { ReceiptDialogComponent } from '../receipt-dialog/receipt-dialog.component';
+import { Router } from '@angular/router';
+import { paths } from 'src/environments/paths.environment';
 
 @Component({
     selector: 'app-final-order-dialog',
@@ -16,6 +18,7 @@ export class FinalOrderDialogComponent {
         private notificationService: NotificationService,
         private dialogRef: MatDialogRef<FinalOrderDialogComponent>,
         private dialog: MatDialog,
+        private router: Router,
         private tokenHandlerService: TokenHandlerService,
         @Inject(MAT_DIALOG_DATA) public order: OrderModel,
         private orderService: OrderService
@@ -29,11 +32,20 @@ export class FinalOrderDialogComponent {
     //handle send order; and opening download receipt dialog;
     public async sendOrder(): Promise<void> {
         try {
-            const ordered = await this.orderService.sendOrderAsync(this.order);
+            const addedOrder = await this.orderService.sendOrderAsync(this.order);
             const dialogConfig = new MatDialogConfig();
-            dialogConfig.data = ordered
+            dialogConfig.data = addedOrder;
             this.dialogRef.close();
-            this.dialog.open(ReceiptDialogComponent, dialogConfig);
+            let receiptDialogRef = this.dialog.open(ReceiptDialogComponent, dialogConfig);
+            
+            //handling dialog close of receipt-dialog handling navigate to home url and show a message when it close properly;
+            receiptDialogRef.afterClosed().subscribe((orderData:OrderModel) => {
+                if(orderData){
+                    this.notificationService.success(`${new Date(orderData.dateToDeliver).toLocaleDateString()} See you then :)`);
+                }
+                this.router.navigateByUrl(paths.homeUrl);
+            });
+
         } catch (error) {
             this.notificationService.error(error);
             if (error.status === 403) {
